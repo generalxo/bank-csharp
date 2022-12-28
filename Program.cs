@@ -2,11 +2,11 @@
 
 /* NOTES
  * USER LOGIN INFO
- * USER ID: "000001AA" "000002AA" "000003AA" "000004AA" "000005AA"
- * USER PIN:  "1234" --- "5678" --- "0123" --- "4567" --- "8910"
+ * USER ID: "ElonTusk" "OscarGrouch" "SpikeSpiegel" "LucynaKushinada" "PeterPanda"
+ * USER Password:  "test0" --- "test1" --- "test2" --- "test3" --- "test4"
  * 
  * <-- TO DO -->
- * Create a List with !User ID & Password!
+ * Create a Class with User ID, Name, Password
  * Create a Login Function
  * Create a menu system --> how do i create one menu system that is able to 
  * 
@@ -20,9 +20,10 @@
     {
         static void Main(string[] args)
         {
+            Console.Clear();
+            Login();
             Console.CursorVisible = false;
-            startMenu();
-
+            //startMenu();
         }
         public static int menuIndex = 0;
 
@@ -142,6 +143,56 @@
 
         static void Login()
         {
+            string? input;
+            int tries = 0;
+
+            #region Users
+            User[] users = new User[5];
+            users[0] = new User("ElonTusk", "Elon Tusk", "test0");
+            users[1] = new User("OscarGrouch", "Oscar Grouch", "test1");
+            users[2] = new User("SpikeSpiegel", "Spike Spiegel", "test2");
+            users[3] = new User("LucynaKushinada", "Lucyna Kushinada", "test3");
+            users[4] = new User("PeterPanda", "Peter Panda", "test4");
+            #endregion
+
+
+
+            while (tries < 3)
+            {
+                Console.WriteLine("Please enter user id:");
+                input = Console.ReadLine();
+
+                for (int i = 0; i < users.Length; i++)
+                {
+                    if (input == users[i].GetId())
+                    {
+                        User currentUser = users[i];
+
+                        Console.WriteLine("");
+                        Console.WriteLine("Enter Password:");
+                        input = Console.ReadLine();
+                        if (input == currentUser.GetPassword())
+                        {
+                            Console.WriteLine("Bank Menu would start here");
+                            Console.ReadKey();
+                            tries = 3;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter correct user name & password");
+                        }
+
+                    }
+                }
+                tries++;
+            }
+
+
+
+        }
+
+        /*static void Login()
+        {
             int pin = 1111;
             int tries = 0;
 
@@ -169,7 +220,7 @@
 
             }
             bankMenu();
-        }
+        }*/
 
         static void help()
         {
@@ -183,4 +234,85 @@
         }
 
     }
+
+    class User
+    {
+        private readonly string? id;
+        private string? name;
+        private string? password;
+
+        public User(string? id, string? name, string? password)
+        {
+            this.id = id;
+            this.name = name;
+            this.password = password;
+        }
+
+        public void Info()
+        {
+            Console.WriteLine("id: {0}", id);
+            Console.WriteLine("name: {0}", name);
+            Console.WriteLine("password: {0}", password);
+            Console.WriteLine("-----");
+        }
+
+        public string GetId()
+        {
+            if (id == null)
+            {
+                return "";
+            }
+            else
+            {
+                return id;
+            }
+        }
+        public string GetName()
+        {
+            if (name == null)
+            {
+                return "";
+            }
+            else
+            {
+                return name;
+            }
+        }
+        public string GetPassword()
+        {
+            if (password == null)
+            {
+                return "";
+            }
+            else
+            {
+                return password;
+            }
+        }
+
+    }
+
+    class Account
+    {
+        private readonly string? ownerId;
+        private string? accountName;
+        private double balnace = 0;
+
+        public Account(string? ownerId, string? accountName, double balnace)
+        {
+            this.ownerId = ownerId;
+            this.accountName = accountName;
+            this.balnace = balnace;
+        }
+
+        public void Info()
+        {
+            Console.WriteLine("ownerId: {0}", ownerId);
+            Console.WriteLine("accountName: {0}", accountName);
+            Console.WriteLine("balnace: {0}", balnace);
+            Console.WriteLine("-----");
+        }
+
+    }
+
 }
