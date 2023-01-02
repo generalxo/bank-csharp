@@ -20,10 +20,10 @@
     {
         static void Main(string[] args)
         {
-            Console.Clear();
-            Login();
+            //Console.Clear();
+            //Login();
             Console.CursorVisible = false;
-            //startMenu();
+            startMenu();
         }
         public static int menuIndex = 0;
 
@@ -107,8 +107,41 @@
             }
         }
 
-        static void bankMenu()
+        static void BankMenu(string id)
         {
+            Account[][] accounts = new Account[2][];
+            accounts[0] = new Account[2];
+            accounts[1] = new Account[2];
+            //accounts[2] = new Account[2];
+            //accounts[3] = new Account[2];
+            //accounts[4] = new Account[2];
+
+            accounts[0][0] = new Account("ElonTusk", "Main ", 0);
+            accounts[0][1] = new Account("ElonTusk", "Savings", 0);
+
+            accounts[1][0] = new Account("OscarGrouch", "Main ", 0);
+            accounts[1][1] = new Account("OscarGrouch", "Savings", 0);
+
+            for (int i = 0; i < accounts.Length; i++)
+            {
+                for (int j = 0; j < accounts.LongLength; j++)
+                {
+                    accounts[i][j].Info();
+                }
+            }
+            Console.ReadKey();
+
+            for (int h = 0; h < accounts.Length; h++)
+            {
+                if (accounts[h][0].GetOwnerId() == id)
+                {
+                    Console.WriteLine("! Match Found !");
+                }
+            }
+            Console.ReadKey();
+
+
+
             string[] testMenu = new string[]
             {
                 "Account & Balance", "Transfer", "Withdraw", "Exit"
@@ -141,6 +174,83 @@
             }
         }
 
+        //static void bankMenu()
+        //{
+        //    string[] testMenu = new string[]
+        //    {
+        //        "Account & Balance", "Transfer", "Withdraw", "Exit"
+        //    };
+
+        //    while (true)
+        //    {
+        //        string selectedMenuItem = drawMenu(testMenu);
+
+        //        if (selectedMenuItem == "Account & Balance")
+        //        {
+        //            Console.WriteLine("Account & Balance would start here");
+        //            Console.ReadKey();
+        //        }
+        //        else if (selectedMenuItem == "Transfer")
+        //        {
+        //            Console.WriteLine("Transfer would start here");
+        //            Console.ReadKey();
+        //        }
+        //        else if (selectedMenuItem == "Withdraw")
+        //        {
+        //            Console.WriteLine("Withdraw would start here");
+        //            Console.ReadKey();
+        //        }
+        //        else if (selectedMenuItem == "Exit")
+        //        {
+        //            menuIndex = 0;
+        //            return;
+        //        }
+        //    }
+        //}
+
+        //static string Login()
+        //{
+        //    string? input;
+        //    int tries = 0;
+
+        //    #region Users
+        //    User[] users = new User[5];
+        //    users[0] = new User("ElonTusk", "Elon Tusk", "test0");
+        //    users[1] = new User("OscarGrouch", "Oscar Grouch", "test1");
+        //    users[2] = new User("SpikeSpiegel", "Spike Spiegel", "test2");
+        //    users[3] = new User("LucynaKushinada", "Lucyna Kushinada", "test3");
+        //    users[4] = new User("PeterPanda", "Peter Panda", "test4");
+        //    #endregion
+
+        //    while (tries < 3)
+        //    {
+        //        Console.WriteLine("-- Please Enter Your Name --");
+        //        input = Console.ReadLine();
+
+        //        for (int i = 0; i < users.Length; i++)
+        //        {
+        //            if (input == users[i].GetName())
+        //            {
+        //                User currentUser = users[i];
+
+        //                Console.WriteLine("");
+        //                Console.WriteLine("-- Enter Password --");
+        //                input = Console.ReadLine();
+
+        //                if (input == currentUser.GetPassword())
+        //                {
+        //                    return users[i].GetId();
+        //                    //tries = 3;
+        //                }
+
+        //            }
+        //        }
+        //        Console.WriteLine("!! Please enter correct user name & password !!");
+        //        tries++;
+        //    }
+        //    return "";
+        //}
+
         static void Login()
         {
             string? input;
@@ -155,40 +265,32 @@
             users[4] = new User("PeterPanda", "Peter Panda", "test4");
             #endregion
 
-
-
             while (tries < 3)
             {
-                Console.WriteLine("Please enter user id:");
+                Console.WriteLine("-- Please Enter Your Name --");
                 input = Console.ReadLine();
 
                 for (int i = 0; i < users.Length; i++)
                 {
-                    if (input == users[i].GetId())
+                    if (input == users[i].GetName())
                     {
                         User currentUser = users[i];
 
                         Console.WriteLine("");
-                        Console.WriteLine("Enter Password:");
+                        Console.WriteLine("-- Enter Password --");
                         input = Console.ReadLine();
+
                         if (input == currentUser.GetPassword())
                         {
-                            Console.WriteLine("Bank Menu would start here");
-                            Console.ReadKey();
+                            BankMenu(users[i].GetId());
                             tries = 3;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Please enter correct user name & password");
                         }
 
                     }
                 }
+                Console.WriteLine("!! Please enter correct user name & password !!");
                 tries++;
             }
-
-
-
         }
 
         /*static void Login()
@@ -311,6 +413,18 @@
             Console.WriteLine("accountName: {0}", accountName);
             Console.WriteLine("balnace: {0}", balnace);
             Console.WriteLine("-----");
+        }
+
+        public string GetOwnerId()
+        {
+            if (ownerId == null)
+            {
+                return "";
+            }
+            else
+            {
+                return ownerId;
+            }
         }
 
     }
