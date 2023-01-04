@@ -31,6 +31,7 @@
         {
             Console.Clear();
 
+            Console.WriteLine("");
             Console.WriteLine("Welcome to the bank");
             Console.WriteLine("Select an option");
             Console.WriteLine("");
@@ -107,38 +108,80 @@
             }
         }
 
-        static void BankMenu(string id)
+        public static void BankMenu(string id)
         {
-            Account[][] accounts = new Account[2][];
-            accounts[0] = new Account[2];
-            accounts[1] = new Account[2];
-            //accounts[2] = new Account[2];
-            //accounts[3] = new Account[2];
-            //accounts[4] = new Account[2];
 
-            accounts[0][0] = new Account("ElonTusk", "Main ", 0);
+            #region Account[][] Declaration
+            Account[][] accounts = new Account[5][];
+            accounts[0] = new Account[2];
+            accounts[1] = new Account[3];
+            accounts[2] = new Account[4];
+            accounts[3] = new Account[5];
+            accounts[4] = new Account[6];
+
+            accounts[0][0] = new Account("ElonTusk", "Checking", 0);
             accounts[0][1] = new Account("ElonTusk", "Savings", 0);
 
-            accounts[1][0] = new Account("OscarGrouch", "Main ", 0);
+            accounts[1][0] = new Account("OscarGrouch", "Checking", 0);
             accounts[1][1] = new Account("OscarGrouch", "Savings", 0);
+            accounts[1][2] = new Account("OscarGrouch", "Retirement", 0);
 
-            for (int i = 0; i < accounts.Length; i++)
-            {
-                for (int j = 0; j < accounts.LongLength; j++)
-                {
-                    accounts[i][j].Info();
-                }
-            }
-            Console.ReadKey();
+            accounts[2][0] = new Account("SpikeSpiegel", "Checking", 0);
+            accounts[2][1] = new Account("SpikeSpiegel", "Savings", 0);
+            accounts[2][2] = new Account("SpikeSpiegel", "Retirement", 0);
+            accounts[2][3] = new Account("SpikeSpiegel", "Hobby", 0);
 
-            for (int h = 0; h < accounts.Length; h++)
-            {
-                if (accounts[h][0].GetOwnerId() == id)
-                {
-                    Console.WriteLine("! Match Found !");
-                }
-            }
-            Console.ReadKey();
+            accounts[3][0] = new Account("LucynaKushinada", "Savings", 0);
+            accounts[3][1] = new Account("LucynaKushinada", "Retirement", 0);
+            accounts[3][2] = new Account("LucynaKushinada", "Checking", 0);
+            accounts[3][3] = new Account("LucynaKushinada", "Hobby", 0);
+            accounts[3][4] = new Account("LucynaKushinada", "Food", 0);
+
+            accounts[4][0] = new Account("PeterPanda", "Checking", 500);
+            accounts[4][1] = new Account("PeterPanda", "Savings", 500);
+            accounts[4][2] = new Account("PeterPanda", "Retirement", 500);
+            accounts[4][3] = new Account("PeterPanda", "Food", 500);
+            accounts[4][4] = new Account("PeterPanda", "Hobby", 500);
+            accounts[4][5] = new Account("PeterPanda", "Panda", 500);
+
+            #endregion Account[][] Declaration
+
+            Account[] currentUser;
+
+            //for (int i = 0; i < accounts.Length; i++)
+            //{
+            //    for (int j = 0; j < accounts[i].LongLength; j++)
+            //    {
+            //        accounts[i][j].Info();
+            //    }
+            //}
+            //Console.ReadKey();
+
+            //for (int h = 0; h < accounts.Length; h++)
+            //{
+            //    if (accounts[h][0].GetOwnerId() == id)
+            //    {
+            //        Console.WriteLine("<accounts.Length Loop>");
+            //        Console.WriteLine("! Match Found !");
+
+            //        Account[] currentUser = accounts[h];
+            //        for (int g = 0; g < currentUser.Length; g++)
+            //        {
+            //            currentUser[g].Info();
+            //        }
+
+            //    }
+            //}
+            //Console.ReadKey();
+
+            //for (int l = 0; l < accounts.Length; l++)
+            //{
+            //    if (accounts[l][0].GetOwnerId() == id)
+            //    {
+            //        Console.WriteLine("id: {0}", id);
+            //    }
+            //}
+            //Console.ReadKey();
 
 
 
@@ -153,8 +196,26 @@
 
                 if (selectedMenuItem == "Account & Balance")
                 {
-                    Console.WriteLine("Account & Balance would start here");
+                    Console.Clear();
+                    Console.WriteLine("");
+                    Console.WriteLine("- Accounts & Balance -");
+                    Console.WriteLine("");
+
+                    for (int i = 0; i < accounts.Length; i++)
+                    {
+                        if (accounts[i][0].GetOwnerId() == id)
+                        {
+                            for (int j = 0; j < accounts[i].LongLength; j++)
+                            {
+                                accounts[i][j].GetAccounts();
+                            }
+                        }
+                    }
+
+                    Console.WriteLine("");
+                    Console.WriteLine("Enter Any Key to Exit");
                     Console.ReadKey();
+
                 }
                 else if (selectedMenuItem == "Transfer")
                 {
@@ -262,7 +323,7 @@
             users[1] = new User("OscarGrouch", "Oscar Grouch", "test1");
             users[2] = new User("SpikeSpiegel", "Spike Spiegel", "test2");
             users[3] = new User("LucynaKushinada", "Lucyna Kushinada", "test3");
-            users[4] = new User("PeterPanda", "Peter Panda", "test4");
+            users[4] = new User("PeterPanda", "aa", "aa");
             #endregion
 
             while (tries < 3)
@@ -413,6 +474,12 @@
             Console.WriteLine("accountName: {0}", accountName);
             Console.WriteLine("balnace: {0}", balnace);
             Console.WriteLine("-----");
+        }
+
+        public void GetAccounts()
+        {
+            Console.WriteLine(" " + accountName + ":  " + balnace + "$");
+            Console.WriteLine("");
         }
 
         public string GetOwnerId()
