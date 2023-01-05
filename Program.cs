@@ -1,27 +1,15 @@
 ﻿namespace Banken01
-
-/* NOTES
- * USER LOGIN INFO
- * USER ID: "ElonTusk" "OscarGrouch" "SpikeSpiegel" "LucynaKushinada" "PeterPanda"
- * USER Password:  "test0" --- "test1" --- "test2" --- "test3" --- "test4"
- * 
- * <-- TO DO -->
- * Create a Class with User ID, Name, Password
- * Create a Login Function
- * Create a menu system --> how do i create one menu system that is able to 
- * 
- *  -- Menu Options --
- *  "Log in", "Help", "Exit"
- *  "Account & Balance", "Transfer", "Withdraw",  "Exit"
- */
-
+#region Notes
+//NOTES
+// USER LOGIN INFO
+// USER ID: "ElonTusk" "OscarGrouch" "SpikeSpiegel" "LucynaKushinada" "PeterPanda"
+// USER Password:  "test0" --- "test1" --- "test2" --- "test3" --- "test4"
+#endregion Notes
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            //Console.Clear();
-            //Login();
             Console.CursorVisible = false;
             startMenu();
         }
@@ -91,20 +79,21 @@
             {
                 string selectedMenuItem = drawMenu(testMenu);
 
-                if (selectedMenuItem == "Log in")
+                switch (selectedMenuItem)
                 {
+                    case "Log in":
+                        Login();
+                        break;
 
-                    //Console.WriteLine("Log in would start here");
-                    Login();
+                    case "Help":
+                        help();
+                        break;
+
+                    case "Exit":
+                        Environment.Exit(0);
+                        break;
                 }
-                else if (selectedMenuItem == "Help")
-                {
-                    help();
-                }
-                else if (selectedMenuItem == "Exit")
-                {
-                    Environment.Exit(0);
-                }
+
             }
         }
 
@@ -144,10 +133,11 @@
             accounts[4][4] = new Account("PeterPanda", "Hobby", 500);
             accounts[4][5] = new Account("PeterPanda", "Panda", 500);
 
-            #endregion Account[][] Declaration
-
             Account[] currentUser;
 
+            #endregion Account[][] Declaration
+
+            #region Old Loops
             //for (int i = 0; i < accounts.Length; i++)
             //{
             //    for (int j = 0; j < accounts[i].LongLength; j++)
@@ -183,134 +173,157 @@
             //}
             //Console.ReadKey();
 
+            //static void bankMenu()
+            //{
+            //    string[] testMenu = new string[]
+            //    {
+            //        "Account & Balance", "Transfer", "Withdraw", "Exit"
+            //    };
 
+            //    while (true)
+            //    {
+            //        string selectedMenuItem = drawMenu(testMenu);
 
-            string[] testMenu = new string[]
+            //        if (selectedMenuItem == "Account & Balance")
+            //        {
+            //            Console.WriteLine("Account & Balance would start here");
+            //            Console.ReadKey();
+            //        }
+            //        else if (selectedMenuItem == "Transfer")
+            //        {
+            //            Console.WriteLine("Transfer would start here");
+            //            Console.ReadKey();
+            //        }
+            //        else if (selectedMenuItem == "Withdraw")
+            //        {
+            //            Console.WriteLine("Withdraw would start here");
+            //            Console.ReadKey();
+            //        }
+            //        else if (selectedMenuItem == "Exit")
+            //        {
+            //            menuIndex = 0;
+            //            return;
+            //        }
+            //    }
+            //}
+
+            //static string Login()
+            //{
+            //    string? input;
+            //    int tries = 0;
+
+            //    #region Users
+            //    User[] users = new User[5];
+            //    users[0] = new User("ElonTusk", "Elon Tusk", "test0");
+            //    users[1] = new User("OscarGrouch", "Oscar Grouch", "test1");
+            //    users[2] = new User("SpikeSpiegel", "Spike Spiegel", "test2");
+            //    users[3] = new User("LucynaKushinada", "Lucyna Kushinada", "test3");
+            //    users[4] = new User("PeterPanda", "Peter Panda", "test4");
+            //    #endregion
+
+            //    while (tries < 3)
+            //    {
+            //        Console.WriteLine("-- Please Enter Your Name --");
+            //        input = Console.ReadLine();
+
+            //        for (int i = 0; i < users.Length; i++)
+            //        {
+            //            if (input == users[i].GetName())
+            //            {
+            //                User currentUser = users[i];
+
+            //                Console.WriteLine("");
+            //                Console.WriteLine("-- Enter Password --");
+            //                input = Console.ReadLine();
+
+            //                if (input == currentUser.GetPassword())
+            //                {
+            //                    return users[i].GetId();
+            //                    //tries = 3;
+            //                }
+
+            //            }
+            //        }
+            //        Console.WriteLine("!! Please enter correct user name & password !!");
+            //        tries++;
+            //    }
+            //    return "";
+            //}
+            #endregion Old
+
+            string? input;
+
+            string[] BankMenu = new string[]
             {
                 "Account & Balance", "Transfer", "Withdraw", "Exit"
             };
 
             while (true)
             {
-                string selectedMenuItem = drawMenu(testMenu);
+                string selectedMenuItem = drawMenu(BankMenu);
 
-                if (selectedMenuItem == "Account & Balance")
+                switch (selectedMenuItem)
                 {
-                    Console.Clear();
-                    Console.WriteLine("");
-                    Console.WriteLine("- Accounts & Balance -");
-                    Console.WriteLine("");
+                    case "Account & Balance":
+                        Console.Clear();
+                        Console.WriteLine("");
+                        Console.WriteLine("- Accounts & Balance -");
+                        Console.WriteLine("");
 
-                    for (int i = 0; i < accounts.Length; i++)
-                    {
-                        if (accounts[i][0].GetOwnerId() == id)
+                        for (int i = 0; i < accounts.Length; i++)
                         {
-                            for (int j = 0; j < accounts[i].LongLength; j++)
+                            if (accounts[i][0].GetOwnerId() == id)
                             {
-                                accounts[i][j].GetAccounts();
+                                currentUser = accounts[i];
+
+                                for (int j = 0; j < accounts[i].LongLength; j++)
+                                {
+                                    currentUser[j].GetAccountBalance();
+                                }
                             }
                         }
-                    }
 
-                    Console.WriteLine("");
-                    Console.WriteLine("Enter Any Key to Exit");
-                    Console.ReadKey();
+                        Console.WriteLine("");
+                        Console.WriteLine("Enter Any Key to Exit");
+                        Console.ReadKey();
+                        break;
+
+                    case "Transfer":
+                        Console.Clear();
+                        Console.WriteLine(" - Transfer -");
+
+                        for (int i = 0; i < accounts.Length; i++)
+                        {
+                            if (accounts[i][0].GetOwnerId() == id)
+                            {
+                                currentUser = accounts[i];
+                                for (int j = 0; j < accounts[i].LongLength; j++)
+                                {
+                                    currentUser[j].DisplayAccountName();
+                                }
+                            }
+                        }
+                        Console.WriteLine("- Please Enter Account To Transfer from -");
+                        input = Console.ReadLine();
+                        Console.WriteLine(input);
+                        Console.ReadKey();
+                        break;
+
+                    case "Withdraw":
+                        Console.WriteLine("Withdraw would start here");
+                        Console.ReadKey();
+                        break;
+
+                    case "Exit":
+                        menuIndex = 0;
+                        return;
+
 
                 }
-                else if (selectedMenuItem == "Transfer")
-                {
-                    Console.WriteLine("Transfer would start here");
-                    Console.ReadKey();
-                }
-                else if (selectedMenuItem == "Withdraw")
-                {
-                    Console.WriteLine("Withdraw would start here");
-                    Console.ReadKey();
-                }
-                else if (selectedMenuItem == "Exit")
-                {
-                    menuIndex = 0;
-                    return;
-                }
+
+
             }
         }
-
-        //static void bankMenu()
-        //{
-        //    string[] testMenu = new string[]
-        //    {
-        //        "Account & Balance", "Transfer", "Withdraw", "Exit"
-        //    };
-
-        //    while (true)
-        //    {
-        //        string selectedMenuItem = drawMenu(testMenu);
-
-        //        if (selectedMenuItem == "Account & Balance")
-        //        {
-        //            Console.WriteLine("Account & Balance would start here");
-        //            Console.ReadKey();
-        //        }
-        //        else if (selectedMenuItem == "Transfer")
-        //        {
-        //            Console.WriteLine("Transfer would start here");
-        //            Console.ReadKey();
-        //        }
-        //        else if (selectedMenuItem == "Withdraw")
-        //        {
-        //            Console.WriteLine("Withdraw would start here");
-        //            Console.ReadKey();
-        //        }
-        //        else if (selectedMenuItem == "Exit")
-        //        {
-        //            menuIndex = 0;
-        //            return;
-        //        }
-        //    }
-        //}
-
-        //static string Login()
-        //{
-        //    string? input;
-        //    int tries = 0;
-
-        //    #region Users
-        //    User[] users = new User[5];
-        //    users[0] = new User("ElonTusk", "Elon Tusk", "test0");
-        //    users[1] = new User("OscarGrouch", "Oscar Grouch", "test1");
-        //    users[2] = new User("SpikeSpiegel", "Spike Spiegel", "test2");
-        //    users[3] = new User("LucynaKushinada", "Lucyna Kushinada", "test3");
-        //    users[4] = new User("PeterPanda", "Peter Panda", "test4");
-        //    #endregion
-
-        //    while (tries < 3)
-        //    {
-        //        Console.WriteLine("-- Please Enter Your Name --");
-        //        input = Console.ReadLine();
-
-        //        for (int i = 0; i < users.Length; i++)
-        //        {
-        //            if (input == users[i].GetName())
-        //            {
-        //                User currentUser = users[i];
-
-        //                Console.WriteLine("");
-        //                Console.WriteLine("-- Enter Password --");
-        //                input = Console.ReadLine();
-
-        //                if (input == currentUser.GetPassword())
-        //                {
-        //                    return users[i].GetId();
-        //                    //tries = 3;
-        //                }
-
-        //            }
-        //        }
-        //        Console.WriteLine("!! Please enter correct user name & password !!");
-        //        tries++;
-        //    }
-        //    return "";
-        //}
 
         static void Login()
         {
@@ -354,37 +367,6 @@
             }
         }
 
-        /*static void Login()
-        {
-            int pin = 1111;
-            int tries = 0;
-
-            Console.Clear();
-            Console.CursorVisible = false;
-
-            Console.WriteLine("Welcome to the Bank");
-            Console.WriteLine("");
-
-            Console.WriteLine("Enter Your Pin");
-            Int32.TryParse(Console.ReadLine(), out int input);
-            while (tries < 3 && input != pin)
-            {
-
-                if (tries > 1)
-                {
-                    return;
-                }
-                else
-                {
-                    Console.WriteLine("Enter Correct Pin Please!");
-                    Int32.TryParse(Console.ReadLine(), out input);
-                    tries++;
-                }
-
-            }
-            bankMenu();
-        }*/
-
         static void help()
         {
             Console.Clear();
@@ -397,6 +379,7 @@
         }
 
     }
+
 
     class User
     {
@@ -476,10 +459,28 @@
             Console.WriteLine("-----");
         }
 
-        public void GetAccounts()
+        public void GetAccountBalance()
         {
             Console.WriteLine(" " + accountName + ":  " + balnace + "$");
             Console.WriteLine("");
+        }
+
+        public void DisplayAccountName()
+        {
+            Console.WriteLine(" " + accountName);
+            Console.WriteLine("");
+        }
+
+        public string GetAccountName()
+        {
+            if (accountName == null)
+            {
+                return "";
+            }
+            else
+            {
+                return accountName;
+            }
         }
 
         public string GetOwnerId()
