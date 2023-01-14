@@ -2,8 +2,9 @@
 #region Notes
 //NOTES
 // USER LOGIN INFO
-// USER ID: "ElonTusk" "OscarGrouch" "SpikeSpiegel" "LucynaKushinada" "PeterPanda"
-// USER Password:  "test0" --- "test1" --- "test2" --- "test3" --- "test4"
+// USER ID:       "ElonTusk" "OscarGrouch" "SpikeSpiegel" "LucynaKushinada" "PeterPanda"
+// USER Name     "Elon Tusk" "Oscar Grouch" "Spike Spiegel" "Lucyna Kushinada"  "aa"
+// USER Password:  "test0" ---  "test1"  ---  "test2"   ---    "test3"    ---    "aa"
 #endregion Notes
 {
     internal class Program
@@ -18,6 +19,8 @@
 
         public static string DrawMenu(string[] item)
         {
+            //Method takes in an array of strings and displays them. The int menuIndex indicates which item the user is selecting
+            //Method allows user to navigare the array of strings and select a string and reurns it
             Console.Clear();
 
             Console.WriteLine("");
@@ -27,7 +30,6 @@
 
             for (int i = 0; i < item.Length; i++)
             {
-                //Console.WriteLine(item[i]);
                 if (i == menuIndex)
                 {
                     Console.WriteLine("[" + item[i] + "]");
@@ -100,39 +102,61 @@
 
         static void WithdrawMenu(Account[] currentUser)
         {
-            Console.Clear();
-            Console.WriteLine("");
-            Console.WriteLine("- Withdraw -");
-
-            for (int i = 0; i < currentUser.Length; i++)
+            string? input;
+            while (true)
             {
-                Console.WriteLine($"{i}: {currentUser[i].GetAccountName()} {currentUser[i].GetBalance()}");
-            }
-            Console.WriteLine("- Enter account number to withdraw from -");
-            Console.WriteLine("");
-            if (int.TryParse(Console.ReadLine(), out int result))
-            {
-                Console.WriteLine("- Please enter amount to withdraw -");
                 Console.WriteLine("");
-                if (decimal.TryParse(Console.ReadLine(), out decimal amount))
+                Console.WriteLine("- Withdraw -");
+                Console.WriteLine("");
+
+                for (int i = 0; i < currentUser.Length; i++)
                 {
-                    currentUser[result].Withdraw(amount);
+                    Console.WriteLine($"{i}: {currentUser[i].GetAccountName()} {currentUser[i].GetBalance()}");
+                }
+                Console.WriteLine("- Enter account number to withdraw from -");
+                Console.WriteLine("- Enter nothing to exit -");
+
+                input = Console.ReadLine();
+                if (input == null)
+                {
+                    break;
+                }
+                else if (input == "")
+                {
+                    break;
+                }
+                if (int.TryParse(input, out int accountNumber))
+                {
+                    Console.WriteLine("- Please enter amount to withdraw -");
+                    Console.WriteLine("");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal amount))
+                    {
+                        currentUser[accountNumber].Withdraw(amount);
+                        Console.WriteLine($"- {amount} was withdrawn from account {currentUser[accountNumber].GetAccountName()} -");
+                        Console.WriteLine($"- Account {currentUser[accountNumber].GetAccountName()} new Balance is {currentUser[accountNumber].GetBalance()} -");
+                        Console.WriteLine("- Press any key to continue -");
+                        Console.ReadKey();
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("- Please enter a valid amount -");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Please enter a valid amount");
+                    Console.WriteLine("- Please enter a valid account -");
                 }
-            }
-            else
-            {
-                Console.WriteLine("Please enter a valid account");
+
+                Console.ReadKey();
             }
 
-            Console.ReadKey();
         }
 
         static void TransferMenu(Account[] currentUser)
         {
+            string? input;
+
             while (true)
             {
                 Console.Clear();
@@ -145,7 +169,17 @@
                     Console.WriteLine($"{i}: {currentUser[i].GetAccountName()} {currentUser[i].GetBalance()}");
                 }
                 Console.WriteLine("- Enter account number to transfer from -");
-                if (int.TryParse(Console.ReadLine(), out int index))
+                Console.WriteLine("- Enter nothing to exit -");
+                input = Console.ReadLine();
+                if (input == null)
+                {
+                    break;
+                }
+                else if (input == "")
+                {
+                    break;
+                }
+                else if (int.TryParse(input, out int index))
                 {
                     Console.WriteLine($"- Enter amount to transfer from {currentUser[index].GetAccountName()}");
                     if (decimal.TryParse(Console.ReadLine(), out decimal amount))
@@ -158,7 +192,7 @@
                         }
                         else if (currentUser[index].GetBalance() - amount < 0)
                         {
-                            Console.WriteLine("- Transfer amount larger than balance -");
+                            Console.WriteLine("- Transfer amount is larger than balance -");
                             Console.ReadKey();
                         }
                         else
@@ -170,73 +204,35 @@
                                 currentUser[account].Transfer(amount);
                                 Console.WriteLine($"{currentUser[index].GetAccountName()} {currentUser[index].GetBalance()}");
                                 Console.WriteLine($"{currentUser[account].GetAccountName()} {currentUser[account].GetBalance()}");
+                                Console.WriteLine("- Press any key to continue -");
                                 Console.ReadKey();
+                                break;
                             }
                             else
                             {
                                 Console.WriteLine("- Enter valid account");
+                                Console.WriteLine("- Press any key to continue -");
+                                Console.ReadKey();
                             }
                         }
                     }
                     else
                     {
                         Console.WriteLine("- Enter valid amount -");
+                        Console.WriteLine("- Press any key to continue -");
                         Console.ReadKey();
                     }
                 }
+
                 else
                 {
-                    Console.WriteLine("Enter valid account number");
+                    Console.WriteLine("- Enter valid account number -");
+                    Console.WriteLine("- Press any key to continue -");
                     Console.ReadKey();
                 }
 
-                Console.ReadKey();
-                break;
             }
 
-            //Console.Clear();
-            //Console.WriteLine("");
-            //Console.WriteLine("- Transfer -");
-            //Console.WriteLine("");
-
-            //for (int i = 0; i < currentUser.Length; i++)
-            //{
-            //    Console.WriteLine($"{i}: {currentUser[i].GetAccountName()} {currentUser[i].GetBalance()}");
-            //}
-            //Console.WriteLine("- Enter account number to transfer from -");
-            //if (int.TryParse(Console.ReadLine(), out int index))
-            //{
-            //    Console.WriteLine($"- Enter amount to transfer from {currentUser[index].GetAccountName()}");
-            //    if (decimal.TryParse(Console.ReadLine(), out decimal amount))
-            //    {
-            //        if (amount < 0)
-            //        {
-            //            Console.WriteLine("- Amount is negative enter valid number -");
-            //            Console.ReadKey();
-            //        }
-            //        else if (currentUser[index].GetBalance() - amount < 0)
-            //        {
-            //            Console.WriteLine("- Transfer amount larger than balance -");
-            //            Console.ReadKey();
-            //        }
-            //        else
-            //        {
-
-            //        }
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("- Enter valid amount -");
-            //        Console.ReadKey();
-            //    }
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Enter valid account number");
-            //    Console.ReadKey();
-            //}
-
-            //Console.ReadKey();
         }
 
         public static void BankMenu(string id)
@@ -280,121 +276,6 @@
 
             #endregion
 
-
-            #region Old loops !not in use!
-            //for (int i = 0; i < accounts.Length; i++)
-            //{
-            //    for (int j = 0; j < accounts[i].LongLength; j++)
-            //    {
-            //        accounts[i][j].Info();
-            //    }
-            //}
-            //Console.ReadKey();
-
-            //for (int h = 0; h < accounts.Length; h++)
-            //{
-            //    if (accounts[h][0].GetOwnerId() == id)
-            //    {
-            //        Console.WriteLine("<accounts.Length Loop>");
-            //        Console.WriteLine("! Match Found !");
-
-            //        Account[] currentUser = accounts[h];
-            //        for (int g = 0; g < currentUser.Length; g++)
-            //        {
-            //            currentUser[g].Info();
-            //        }
-
-            //    }
-            //}
-            //Console.ReadKey();
-
-            //for (int l = 0; l < accounts.Length; l++)
-            //{
-            //    if (accounts[l][0].GetOwnerId() == id)
-            //    {
-            //        Console.WriteLine("id: {0}", id);
-            //    }
-            //}
-            //Console.ReadKey();
-
-            //static void bankMenu()
-            //{
-            //    string[] testMenu = new string[]
-            //    {
-            //        "Account & Balance", "Transfer", "Withdraw", "Exit"
-            //    };
-
-            //    while (true)
-            //    {
-            //        string selectedMenuItem = drawMenu(testMenu);
-
-            //        if (selectedMenuItem == "Account & Balance")
-            //        {
-            //            Console.WriteLine("Account & Balance would start here");
-            //            Console.ReadKey();
-            //        }
-            //        else if (selectedMenuItem == "Transfer")
-            //        {
-            //            Console.WriteLine("Transfer would start here");
-            //            Console.ReadKey();
-            //        }
-            //        else if (selectedMenuItem == "Withdraw")
-            //        {
-            //            Console.WriteLine("Withdraw would start here");
-            //            Console.ReadKey();
-            //        }
-            //        else if (selectedMenuItem == "Exit")
-            //        {
-            //            menuIndex = 0;
-            //            return;
-            //        }
-            //    }
-            //}
-
-            //static string Login()
-            //{
-            //    string? input;
-            //    int tries = 0;
-
-            //    #region Users
-            //    User[] users = new User[5];
-            //    users[0] = new User("ElonTusk", "Elon Tusk", "test0");
-            //    users[1] = new User("OscarGrouch", "Oscar Grouch", "test1");
-            //    users[2] = new User("SpikeSpiegel", "Spike Spiegel", "test2");
-            //    users[3] = new User("LucynaKushinada", "Lucyna Kushinada", "test3");
-            //    users[4] = new User("PeterPanda", "Peter Panda", "test4");
-            //    #endregion
-
-            //    while (tries < 3)
-            //    {
-            //        Console.WriteLine("-- Please Enter Your Name --");
-            //        input = Console.ReadLine();
-
-            //        for (int i = 0; i < users.Length; i++)
-            //        {
-            //            if (input == users[i].GetName())
-            //            {
-            //                User currentUser = users[i];
-
-            //                Console.WriteLine("");
-            //                Console.WriteLine("-- Enter Password --");
-            //                input = Console.ReadLine();
-
-            //                if (input == currentUser.GetPassword())
-            //                {
-            //                    return users[i].GetId();
-            //                    //tries = 3;
-            //                }
-
-            //            }
-            //        }
-            //        Console.WriteLine("!! Please enter correct user name & password !!");
-            //        tries++;
-            //    }
-            //    return "";
-            //}
-            #endregion
-
             string[] BankMenu = new string[]
             {
                 "Account & Balance", "Transfer", "Withdraw", "Exit"
@@ -432,6 +313,7 @@
                         break;
 
                     case "Transfer":
+                        Console.Clear();
                         for (int h = 0; h < accounts.Length; h++)
                         {
                             if (accounts[h][0].GetOwnerId() == id)
@@ -442,6 +324,7 @@
                         break;
 
                     case "Withdraw":
+                        Console.Clear();
                         for (int k = 0; k < accounts.Length; k++)
                         {
                             if (accounts[k][0].GetOwnerId() == id)
@@ -455,9 +338,7 @@
                         menuIndex = 0;
                         return;
 
-
                 }
-
 
             }
         }
@@ -615,7 +496,6 @@
             else
             {
                 balnace -= amount;
-                //Console.WriteLine($"Balace: {balnace}");
             }
 
         }
@@ -632,26 +512,6 @@
                 Console.WriteLine($"amount {amount}");
             }
         }
-
-        //public decimal Withdraw(decimal amount)
-        //{
-        //    if (amount <= balnace)
-        //    {
-        //        return balnace - amount;
-
-        //    }
-        //    else
-        //    {
-        //        return 
-        //    }
-
-        //}
-
-        //public void GetAccountBalance()
-        //{
-        //    Console.WriteLine(" " + accountName + ":  " + balnace + "$");
-        //    Console.WriteLine("");
-        //}
 
         public void DisplayAccountName()
         {
