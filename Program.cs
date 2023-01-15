@@ -2,9 +2,8 @@
 #region Notes
 //NOTES
 // USER LOGIN INFO
-// USER ID:       "ElonTusk" "OscarGrouch" "SpikeSpiegel" "LucynaKushinada" "PeterPanda"
-// USER Name     "Elon Tusk" "Oscar Grouch" "Spike Spiegel" "Lucyna Kushinada"  "aa"
-// USER Password:  "test0" ---  "test1"  ---  "test2"   ---    "test3"    ---   "aa"
+// USER ID:       "ElonTusk" "OscarGrouch" "SpikeSpiegel" "LucynaKushinada"   "aa"
+// USER Password:  "test0" ---  "test1"  ---  "test2"   ---    "test3"   ---  "aa"
 #endregion Notes
 {
     internal class Program
@@ -14,8 +13,8 @@
             Console.CursorVisible = false;
             StartMenu();
         }
-        public static int menuIndex = 0;
 
+        public static int menuIndex = 0;
 
         public static string DrawMenu(string[] item)
         {
@@ -168,24 +167,60 @@
                     Console.WriteLine("");
                     if (decimal.TryParse(Console.ReadLine(), out decimal amount))
                     {
-                        currentUser[accountNumber].Withdraw(amount);
-                        Console.WriteLine($"- {amount} was withdrawn from account {currentUser[accountNumber].GetAccountName()} -");
-                        Console.WriteLine($"- Account {currentUser[accountNumber].GetAccountName()} new Balance is {currentUser[accountNumber].GetBalance()} -");
-                        Console.WriteLine("- Press any key to continue -");
-                        Console.ReadKey();
-                        break;
+                        if (amount < 0)
+                        {
+                            Console.WriteLine("- Please enter a valid amount -");
+                            Console.WriteLine("- Press any key to continue -");
+                            Console.ReadKey();
+                            Console.Clear();
+                        }
+                        else if (currentUser[accountNumber].GetBalance() - amount < 0)
+                        {
+                            Console.WriteLine("- Amount exceeds balance -");
+                            Console.WriteLine("- Press any key to continue -");
+                            Console.ReadKey();
+                            Console.Clear();
+                        }
+                        else
+                        {
+                            Console.WriteLine("- Please enter password to confirm transaction -");
+                            input = Console.ReadLine();
+                            if (input == currentUser[accountNumber].GetPassword())
+                            {
+                                currentUser[accountNumber].Withdraw(amount);
+                                Console.WriteLine($"- {amount} was withdrawn from account {currentUser[accountNumber].GetAccountName()} -");
+                                Console.WriteLine($"- Account {currentUser[accountNumber].GetAccountName()} new Balance is {currentUser[accountNumber].GetBalance()} -");
+                                Console.WriteLine("- Press any key to continue -");
+                                Console.ReadKey();
+                                Console.Clear();
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("- Incorrect password -");
+                                Console.WriteLine("- Press any key to continue -");
+                                Console.ReadKey();
+                                Console.Clear();
+                            }
+                        }
+
                     }
                     else
                     {
                         Console.WriteLine("- Please enter a valid amount -");
+                        Console.WriteLine("- Press any key to continue -");
+                        Console.ReadKey();
+                        Console.Clear();
                     }
                 }
                 else
                 {
                     Console.WriteLine("- Please enter a valid account -");
+                    Console.WriteLine("- Press any key to continue -");
+                    Console.ReadKey();
+                    Console.Clear();
                 }
 
-                Console.ReadKey();
             }
 
         }
@@ -389,8 +424,6 @@
 
             while (tries < 3)
             {
-                Console.WriteLine($"{accounts[4][0].GetOwnerId()} should display aa");
-
                 Console.WriteLine("-- Please Enter Your Name --");
                 input = Console.ReadLine();
 
@@ -482,7 +515,6 @@
             else
             {
                 balnace += amount;
-                //Console.WriteLine($"amount {amount}");
             }
         }
 
