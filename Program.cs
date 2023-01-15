@@ -311,44 +311,7 @@
 
         public static void BankMenu(string id, Account[][] accounts)
         {
-
-            #region Account[][] Declarations for all users 
-
-            //Account[][] accounts = new Account[5][];
-            //accounts[0] = new Account[2];
-            //accounts[1] = new Account[3];
-            //accounts[2] = new Account[4];
-            //accounts[3] = new Account[5];
-            //accounts[4] = new Account[6];
-
-            //accounts[0][0] = new Account("ElonTusk", "Checking", "test0", 500000000M);
-            //accounts[0][1] = new Account("ElonTusk", "Savings", "test0", 1000000000000M);
-
-            //accounts[1][0] = new Account("OscarGrouch", "Checking", "test1", 50.58M);
-            //accounts[1][1] = new Account("OscarGrouch", "Savings", "test1", 1M);
-            //accounts[1][2] = new Account("OscarGrouch", "Retirement", "test1", 0M);
-
-            //accounts[2][0] = new Account("SpikeSpiegel", "Checking", "test2", 3000102.71M);
-            //accounts[2][1] = new Account("SpikeSpiegel", "Savings", "test2", 0.78M);
-            //accounts[2][2] = new Account("SpikeSpiegel", "Retirement", "test2", 500M);
-            //accounts[2][3] = new Account("SpikeSpiegel", "Hobby", "test2", 50500M);
-
-            //accounts[3][0] = new Account("LucynaKushinada", "Checking", "test3", 22201M);
-            //accounts[3][1] = new Account("LucynaKushinada", "Savings", "test3", 5050010M);
-            //accounts[3][2] = new Account("LucynaKushinada", "Retirement", "test3", 70M);
-            //accounts[3][3] = new Account("LucynaKushinada", "Hobby", "test3", 10000M);
-            //accounts[3][4] = new Account("LucynaKushinada", "Food", "test3", 7000M);
-
-            //accounts[4][0] = new Account("PeterPanda", "Checking", "test4", 11000.98M);
-            //accounts[4][1] = new Account("PeterPanda", "Savings", "test4", 390000M);
-            //accounts[4][2] = new Account("PeterPanda", "Retirement", "test4", 47000M);
-            //accounts[4][3] = new Account("PeterPanda", "Food", "test4", 2000M);
-            //accounts[4][4] = new Account("PeterPanda", "Hobby", "test4", 5250.5M);
-            //accounts[4][5] = new Account("PeterPanda", "Panda", "test4", 77777M);
-
             Account[] currentUser;
-
-            #endregion
 
             string[] BankMenu = new string[]
             {
