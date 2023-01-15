@@ -4,7 +4,7 @@
 // USER LOGIN INFO
 // USER ID:       "ElonTusk" "OscarGrouch" "SpikeSpiegel" "LucynaKushinada" "PeterPanda"
 // USER Name     "Elon Tusk" "Oscar Grouch" "Spike Spiegel" "Lucyna Kushinada"  "aa"
-// USER Password:  "test0" ---  "test1"  ---  "test2"   ---    "test3"    ---    "aa"
+// USER Password:  "test0" ---  "test1"  ---  "test2"   ---    "test3"    ---   "aa"
 #endregion Notes
 {
     internal class Program
@@ -73,6 +73,42 @@
 
         static void StartMenu()
         {
+
+            #region Account[][] Declarations for all users 
+
+            Account[][] accounts = new Account[5][];
+            accounts[0] = new Account[2];
+            accounts[1] = new Account[3];
+            accounts[2] = new Account[4];
+            accounts[3] = new Account[5];
+            accounts[4] = new Account[6];
+
+            accounts[0][0] = new Account("ElonTusk", "Checking", "test0", 500000000M);
+            accounts[0][1] = new Account("ElonTusk", "Savings", "test0", 1000000000000M);
+
+            accounts[1][0] = new Account("OscarGrouch", "Checking", "test1", 50.58M);
+            accounts[1][1] = new Account("OscarGrouch", "Savings", "test1", 1M);
+            accounts[1][2] = new Account("OscarGrouch", "Retirement", "test1", 0M);
+
+            accounts[2][0] = new Account("SpikeSpiegel", "Checking", "test2", 3000102.71M);
+            accounts[2][1] = new Account("SpikeSpiegel", "Savings", "test2", 0.78M);
+            accounts[2][2] = new Account("SpikeSpiegel", "Retirement", "test2", 500M);
+            accounts[2][3] = new Account("SpikeSpiegel", "Hobby", "test2", 50500M);
+
+            accounts[3][0] = new Account("LucynaKushinada", "Checking", "test3", 22201M);
+            accounts[3][1] = new Account("LucynaKushinada", "Savings", "test3", 5050010M);
+            accounts[3][2] = new Account("LucynaKushinada", "Retirement", "test3", 70M);
+            accounts[3][3] = new Account("LucynaKushinada", "Hobby", "test3", 10000M);
+            accounts[3][4] = new Account("LucynaKushinada", "Food", "test3", 7000M);
+
+            accounts[4][0] = new Account("aa", "Checking", "aa", 11000.98M);
+            accounts[4][1] = new Account("aa", "Savings", "aa", 390000M);
+            accounts[4][2] = new Account("aa", "Retirement", "aa", 47000M);
+            accounts[4][3] = new Account("aa", "Food", "aa", 2000M);
+            accounts[4][4] = new Account("aa", "Hobby", "aa", 5250.5M);
+            accounts[4][5] = new Account("aa", "Panda", "aa", 77777M);
+            #endregion
+
             string[] startMenu = new string[]
             {
                 "Log in", "Help", "Exit"
@@ -85,7 +121,7 @@
                 switch (selectedMenuItem)
                 {
                     case "Log in":
-                        Login();
+                        Login(accounts);
                         break;
 
                     case "Help":
@@ -114,18 +150,19 @@
                     Console.WriteLine($"{i}: {currentUser[i].GetAccountName()} {currentUser[i].GetBalance()}");
                 }
                 Console.WriteLine("- Enter account number to withdraw from -");
-                Console.WriteLine("- Enter nothing to exit -");
+                Console.WriteLine("- Enter e to exit -");
 
                 input = Console.ReadLine();
+
                 if (input == null)
                 {
                     break;
                 }
-                else if (input == "")
+                else if (input.ToLower() == "e")
                 {
                     break;
                 }
-                if (int.TryParse(input, out int accountNumber))
+                else if (int.TryParse(input, out int accountNumber))
                 {
                     Console.WriteLine("- Please enter amount to withdraw -");
                     Console.WriteLine("");
@@ -164,18 +201,20 @@
                 Console.WriteLine("- Transfer -");
                 Console.WriteLine("");
 
+                //for loop displays all user accounts & balance
                 for (int i = 0; i < currentUser.Length; i++)
                 {
                     Console.WriteLine($"{i}: {currentUser[i].GetAccountName()} {currentUser[i].GetBalance()}");
                 }
+
                 Console.WriteLine("- Enter account number to transfer from -");
-                Console.WriteLine("- Enter nothing to exit -");
+                Console.WriteLine("- Enter e to exit -");
                 input = Console.ReadLine();
                 if (input == null)
                 {
                     break;
                 }
-                else if (input == "")
+                else if (input.ToLower() == "e")
                 {
                     break;
                 }
@@ -184,7 +223,6 @@
                     Console.WriteLine($"- Enter amount to transfer from {currentUser[index].GetAccountName()}");
                     if (decimal.TryParse(Console.ReadLine(), out decimal amount))
                     {
-                        Console.WriteLine(amount);
                         if (amount < 0)
                         {
                             Console.WriteLine("- Amount is negative enter valid number -");
@@ -202,8 +240,9 @@
                             {
                                 currentUser[index].Withdraw(amount);
                                 currentUser[account].Transfer(amount);
-                                Console.WriteLine($"{currentUser[index].GetAccountName()} {currentUser[index].GetBalance()}");
-                                Console.WriteLine($"{currentUser[account].GetAccountName()} {currentUser[account].GetBalance()}");
+                                //Console.WriteLine($"{currentUser[index].GetAccountName()} {currentUser[index].GetBalance()}");
+                                //Console.WriteLine($"{currentUser[account].GetAccountName()} {currentUser[account].GetBalance()}");
+                                Console.WriteLine($"- {amount} has been transfered from {currentUser[index].GetAccountName()} to {currentUser[account].GetAccountName()} -");
                                 Console.WriteLine("- Press any key to continue -");
                                 Console.ReadKey();
                                 break;
@@ -235,42 +274,42 @@
 
         }
 
-        public static void BankMenu(string id)
+        public static void BankMenu(string id, Account[][] accounts)
         {
 
             #region Account[][] Declarations for all users 
 
-            Account[][] accounts = new Account[5][];
-            accounts[0] = new Account[2];
-            accounts[1] = new Account[3];
-            accounts[2] = new Account[4];
-            accounts[3] = new Account[5];
-            accounts[4] = new Account[6];
+            //Account[][] accounts = new Account[5][];
+            //accounts[0] = new Account[2];
+            //accounts[1] = new Account[3];
+            //accounts[2] = new Account[4];
+            //accounts[3] = new Account[5];
+            //accounts[4] = new Account[6];
 
-            accounts[0][0] = new Account("ElonTusk", "Checking", 0);
-            accounts[0][1] = new Account("ElonTusk", "Savings", 0);
+            //accounts[0][0] = new Account("ElonTusk", "Checking", "test0", 500000000M);
+            //accounts[0][1] = new Account("ElonTusk", "Savings", "test0", 1000000000000M);
 
-            accounts[1][0] = new Account("OscarGrouch", "Checking", 0);
-            accounts[1][1] = new Account("OscarGrouch", "Savings", 0);
-            accounts[1][2] = new Account("OscarGrouch", "Retirement", 0);
+            //accounts[1][0] = new Account("OscarGrouch", "Checking", "test1", 50.58M);
+            //accounts[1][1] = new Account("OscarGrouch", "Savings", "test1", 1M);
+            //accounts[1][2] = new Account("OscarGrouch", "Retirement", "test1", 0M);
 
-            accounts[2][0] = new Account("SpikeSpiegel", "Checking", 0);
-            accounts[2][1] = new Account("SpikeSpiegel", "Savings", 0);
-            accounts[2][2] = new Account("SpikeSpiegel", "Retirement", 0);
-            accounts[2][3] = new Account("SpikeSpiegel", "Hobby", 0);
+            //accounts[2][0] = new Account("SpikeSpiegel", "Checking", "test2", 3000102.71M);
+            //accounts[2][1] = new Account("SpikeSpiegel", "Savings", "test2", 0.78M);
+            //accounts[2][2] = new Account("SpikeSpiegel", "Retirement", "test2", 500M);
+            //accounts[2][3] = new Account("SpikeSpiegel", "Hobby", "test2", 50500M);
 
-            accounts[3][0] = new Account("LucynaKushinada", "Savings", 0);
-            accounts[3][1] = new Account("LucynaKushinada", "Retirement", 0);
-            accounts[3][2] = new Account("LucynaKushinada", "Checking", 0);
-            accounts[3][3] = new Account("LucynaKushinada", "Hobby", 0);
-            accounts[3][4] = new Account("LucynaKushinada", "Food", 0);
+            //accounts[3][0] = new Account("LucynaKushinada", "Checking", "test3", 22201M);
+            //accounts[3][1] = new Account("LucynaKushinada", "Savings", "test3", 5050010M);
+            //accounts[3][2] = new Account("LucynaKushinada", "Retirement", "test3", 70M);
+            //accounts[3][3] = new Account("LucynaKushinada", "Hobby", "test3", 10000M);
+            //accounts[3][4] = new Account("LucynaKushinada", "Food", "test3", 7000M);
 
-            accounts[4][0] = new Account("PeterPanda", "Checking", 11000.98M);
-            accounts[4][1] = new Account("PeterPanda", "Savings", 390000M);
-            accounts[4][2] = new Account("PeterPanda", "Retirement", 47000M);
-            accounts[4][3] = new Account("PeterPanda", "Food", 2000M);
-            accounts[4][4] = new Account("PeterPanda", "Hobby", 5250.5M);
-            accounts[4][5] = new Account("PeterPanda", "Panda", 77777M);
+            //accounts[4][0] = new Account("PeterPanda", "Checking", "test4", 11000.98M);
+            //accounts[4][1] = new Account("PeterPanda", "Savings", "test4", 390000M);
+            //accounts[4][2] = new Account("PeterPanda", "Retirement", "test4", 47000M);
+            //accounts[4][3] = new Account("PeterPanda", "Food", "test4", 2000M);
+            //accounts[4][4] = new Account("PeterPanda", "Hobby", "test4", 5250.5M);
+            //accounts[4][5] = new Account("PeterPanda", "Panda", "test4", 77777M);
 
             Account[] currentUser;
 
@@ -343,38 +382,29 @@
             }
         }
 
-        static void Login()
+        static void Login(Account[][] accounts)
         {
             string? input;
             int tries = 0;
 
-            #region Users
-            User[] users = new User[5];
-            users[0] = new User("ElonTusk", "Elon Tusk", "test0");
-            users[1] = new User("OscarGrouch", "Oscar Grouch", "test1");
-            users[2] = new User("SpikeSpiegel", "Spike Spiegel", "test2");
-            users[3] = new User("LucynaKushinada", "Lucyna Kushinada", "test3");
-            users[4] = new User("PeterPanda", "aa", "aa");
-            #endregion
-
             while (tries < 3)
             {
+                Console.WriteLine($"{accounts[4][0].GetOwnerId()} should display aa");
+
                 Console.WriteLine("-- Please Enter Your Name --");
                 input = Console.ReadLine();
 
-                for (int i = 0; i < users.Length; i++)
+                for (int i = 0; i < accounts.Length; i++)
                 {
-                    if (input == users[i].GetName())
+                    if (input == accounts[i][0].GetOwnerId())
                     {
-                        User currentUser = users[i];
-
                         Console.WriteLine("");
                         Console.WriteLine("-- Enter Password --");
                         input = Console.ReadLine();
 
-                        if (input == currentUser.GetPassword())
+                        if (input == accounts[i][0].GetPassword())
                         {
-                            BankMenu(users[i].GetId());
+                            BankMenu(accounts[i][0].GetOwnerId(), accounts);
                             tries = 3;
                         }
 
@@ -398,76 +428,19 @@
 
     }
 
-
-    class User
-    {
-        private readonly string? id;
-        private readonly string? name;
-        private readonly string? password;
-
-        public User(string? id, string? name, string? password)
-        {
-            this.id = id;
-            this.name = name;
-            this.password = password;
-        }
-
-        public void Info()
-        {
-            Console.WriteLine("id: {0}", id);
-            Console.WriteLine("name: {0}", name);
-            Console.WriteLine("password: {0}", password);
-            Console.WriteLine("-----");
-        }
-
-        public string GetId()
-        {
-            if (id == null)
-            {
-                return "";
-            }
-            else
-            {
-                return id;
-            }
-
-        }
-        public string GetName()
-        {
-            if (name == null)
-            {
-                return "";
-            }
-            else
-            {
-                return name;
-            }
-        }
-        public string GetPassword()
-        {
-            if (password == null)
-            {
-                return "";
-            }
-            else
-            {
-                return password;
-            }
-        }
-
-    }
-
     public class Account
     {
         private readonly string? ownerId;
         private readonly string? accountName;
+        private readonly string? password;
         private decimal balnace = 0M;
 
-        public Account(string? ownerId, string? accountName, decimal balnace)
+        public Account(string? ownerId, string? accountName, string? password, decimal balnace)
         {
             this.ownerId = ownerId;
             this.accountName = accountName;
             this.balnace = balnace;
+            this.password = password;
         }
 
         public void Info()
@@ -509,14 +482,8 @@
             else
             {
                 balnace += amount;
-                Console.WriteLine($"amount {amount}");
+                //Console.WriteLine($"amount {amount}");
             }
-        }
-
-        public void DisplayAccountName()
-        {
-            Console.WriteLine(" " + accountName);
-            Console.WriteLine("");
         }
 
         public string GetAccountName()
@@ -540,6 +507,18 @@
             else
             {
                 return ownerId;
+            }
+        }
+
+        public string GetPassword()
+        {
+            if (password == null)
+            {
+                return "";
+            }
+            else
+            {
+                return password;
             }
         }
 
