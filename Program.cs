@@ -421,7 +421,6 @@
         {
             string? input;
             int tries = 0;
-            bool forceExit = false;
 
             while (tries < 3)
             {
@@ -441,7 +440,6 @@
                             BankMenu(accounts[i][0].GetOwnerId(), accounts);
                             tries = 5;
                         }
-
                     }
                 }
                 Console.WriteLine("!! Please enter correct user name & password !!");
