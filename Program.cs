@@ -19,7 +19,7 @@
         public static string DrawMenu(string[] item)
         {
             //Method takes in an array of strings and displays them. The int menuIndex indicates which item the user is selecting
-            //Method allows user to navigare the array of strings and select a string and reurns it
+            //Method allows user to navigare the array of strings and select a string and return it
             Console.Clear();
 
             Console.WriteLine("");
@@ -39,6 +39,7 @@
                 }
             }
 
+            //Check for key input
             ConsoleKeyInfo ckey = Console.ReadKey();
             if (ckey.Key == ConsoleKey.DownArrow)
             {
@@ -113,6 +114,8 @@
                 "Log in", "Help", "Exit"
             };
 
+            //DrawMenu() Method displays the string[] startMenu and returns one of the strings
+            //Switch Checcks selectedMenuItem and runs coresponding method
             while (true)
             {
                 string selectedMenuItem = DrawMenu(startMenu);
@@ -144,6 +147,7 @@
                 Console.WriteLine("- Withdraw -");
                 Console.WriteLine("");
 
+                //Loop displaying all of the useres accounts and balnace
                 for (int i = 0; i < currentUser.Length; i++)
                 {
                     Console.WriteLine($"{i}: {currentUser[i].GetAccountName()} {currentUser[i].GetBalance()}");
@@ -153,6 +157,7 @@
 
                 input = Console.ReadLine();
 
+                //Check input for null or "e" == breaks while loop
                 if (input == null)
                 {
                     break;
@@ -161,10 +166,12 @@
                 {
                     break;
                 }
+                //Check for valid int corresponding to an account
                 else if (int.TryParse(input, out int accountNumber))
                 {
                     Console.WriteLine("- Please enter amount to withdraw -");
                     Console.WriteLine("");
+                    //Check for if 
                     if (decimal.TryParse(Console.ReadLine(), out decimal amount))
                     {
                         if (amount < 0)
@@ -181,10 +188,12 @@
                             Console.ReadKey();
                             Console.Clear();
                         }
+                        //If amount is not less than 0 && account balance - amount is not less than 0
                         else
                         {
                             Console.WriteLine("- Please enter password to confirm transaction -");
                             input = Console.ReadLine();
+                            //Check for if passwords match
                             if (input == currentUser[accountNumber].GetPassword())
                             {
                                 currentUser[accountNumber].Withdraw(amount);
@@ -245,6 +254,7 @@
                 Console.WriteLine("- Enter account number to transfer from -");
                 Console.WriteLine("- Enter e to exit -");
                 input = Console.ReadLine();
+                //Check input for null or "e" == breaks while loop
                 if (input == null)
                 {
                     break;
@@ -253,9 +263,11 @@
                 {
                     break;
                 }
+                //Check for valid int corresponding to an account
                 else if (int.TryParse(input, out int index))
                 {
                     Console.WriteLine($"- Enter amount to transfer from {currentUser[index].GetAccountName()}");
+                    //If amount is not less than 0 && account balance - amount is not less than 0
                     if (decimal.TryParse(Console.ReadLine(), out decimal amount))
                     {
                         if (amount < 0)
@@ -271,12 +283,11 @@
                         else
                         {
                             Console.WriteLine("- Enter account number to transfer to -");
+                            //Check for valid int corresponding to an account
                             if (int.TryParse(Console.ReadLine(), out int account))
                             {
                                 currentUser[index].Withdraw(amount);
                                 currentUser[account].Transfer(amount);
-                                //Console.WriteLine($"{currentUser[index].GetAccountName()} {currentUser[index].GetBalance()}");
-                                //Console.WriteLine($"{currentUser[account].GetAccountName()} {currentUser[account].GetBalance()}");
                                 Console.WriteLine($"- {amount} has been transfered from {currentUser[index].GetAccountName()} to {currentUser[account].GetAccountName()} -");
                                 Console.WriteLine("- Press any key to continue -");
                                 Console.ReadKey();
